@@ -84,6 +84,9 @@ def which(program):
     def is_exe(fpath):
         return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
 
+    if sys.platform == 'win32' and program.lower().find('.exe') == -1:
+        program += ".exe"
+
     fpath, fname = os.path.split(program)
     if fpath:
         if is_exe(program):
