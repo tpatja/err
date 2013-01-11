@@ -25,10 +25,15 @@ import subprocess
 from imp import reload
 
 from tarfile import TarFile
-from urllib.request import urlopen
 
-from errbot import botcmd, PY2
+from errbot import botcmd, PY2, PY3
 from errbot.backends.base import Backend
+
+if PY3:
+    from urllib.request import urlopen
+else:
+    from urllib2 import urlopen
+
 
 from errbot.plugin_manager import get_all_active_plugin_names, deactivate_all_plugins, update_plugin_places, get_all_active_plugin_objects,\
     get_all_plugins, global_restart, get_all_plugin_names, activate_plugin_with_version_check, deactivatePluginByName, get_plugin_obj_by_name,\

@@ -3,12 +3,19 @@ import logging
 import inspect
 import os
 import re
-from html import entities
+
+
 import sys
 import time
 
 PY3 = sys.version_info[0] == 3
 PY2 = not PY3
+
+if PY2:
+    from htmlentitydefs import name2codepoint
+else:
+    from html.entities import name2codepoint
+
 
 PLUGINS_SUBDIR = b'plugins' if PY2 else 'plugins'
 
@@ -155,7 +162,7 @@ def unescape_xml(text):
         else:
             # named entity
             try:
-                text = chr(entities.name2codepoint[text[1:-1]])
+                text = chr(name2codepoint[text[1:-1]])
             except KeyError:
                 pass
         return text  # leave as is
